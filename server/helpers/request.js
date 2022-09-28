@@ -3,23 +3,40 @@ const {
   ZARA_PRICE_SELECTOR,
   HB_PRICE_SELECTOR,
   TY_PRICE_SELECTOR,
-} = require('../constants/constants');
+  USER_AGENT,
+  BERSHKA,
+  HEPSIBURADA,
+  TRENDYOL,
+  AMAZON,
+  ZARA,
+  AMAZON_PRICE_SELECTORS,
+} = require('../utils/constants');
 
 module.exports = {
   getScrapeParams: (url) => {
-    if (url.includes('bershka') || url.includes('zara'))
-      return {
-        userAgent:
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-        priceSelector: url.includes('bershka')
-          ? BERSHKA_PRICE_SELECTOR
-          : ZARA_PRICE_SELECTOR,
-      };
-
-    return {
-      priceSelector: url.includes('hepsiburada')
-        ? HB_PRICE_SELECTOR
-        : TY_PRICE_SELECTOR,
-    };
+    return (
+      (url.includes(BERSHKA) && {
+        userAgent: USER_AGENT,
+        priceSelector: BERSHKA_PRICE_SELECTOR,
+        site: BERSHKA,
+      }) ||
+      (url.includes(ZARA) && {
+        userAgent: USER_AGENT,
+        priceSelector: ZARA_PRICE_SELECTOR,
+        site: ZARA,
+      }) ||
+      (url.includes(HEPSIBURADA) && {
+        priceSelector: HB_PRICE_SELECTOR,
+        site: HEPSIBURADA,
+      }) ||
+      (url.includes(TRENDYOL) && {
+        priceSelector: TY_PRICE_SELECTOR,
+        site: TRENDYOL,
+      }) ||
+      (url.includes(AMAZON) && {
+        priceSelector: AMAZON_PRICE_SELECTORS,
+        site: AMAZON,
+      })
+    );
   },
 };
