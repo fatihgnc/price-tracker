@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import Login from '../../screens/Login';
-import Main from '../../screens/Main';
-import Register from '../../screens/Register';
+import Login from '../screens/Login';
+import Main from '../screens/Main';
+import Register from '../screens/Register';
 import MainLayout from '../layout/MainLayout';
 
 export default function Router() {

@@ -10,6 +10,6 @@
   }
 
   body {
-    @apply h-[100vh] grid place-items-center bg-black text-white font-poppins;
+    @apply bg-black text-white font-poppins;
   }
 }
