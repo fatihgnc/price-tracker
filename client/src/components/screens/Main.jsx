@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
+import { INVALID_URL_TEXT, URL_INPUT_PLACEHOLDER } from '../../utils/constants';
 import { trackPrice } from '../../utils/request';
 import { checkUrl } from '../../utils/url';
 
 export default function Main() {
   const [url, setUrl] = useState('');
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (error) {
-      alert(error);
-      setError('');
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     alert(error);
+  //     setError('');
+  //   }
+  // }, [error]);
 
   const processRequest = () => {
     if (checkUrl(url)) {
       trackPrice(url);
-      setError('');
+      // setError('');
       setUrl('');
-    } else setError('Geçersiz bir adres girdiniz!');
+    }
+    // else setError(INVALID_URL_TEXT);
   };
 
   return (
@@ -28,7 +30,7 @@ export default function Main() {
         <div className='flex gap-x-4 items-center w-full flex-grow bg-black text-white text-lg font-light'>
           <input
             type='text'
-            placeholder='(bershka/amazon/hepsiburada/trendyol).com/your-dream-product'
+            placeholder={URL_INPUT_PLACEHOLDER}
             onKeyUp={(e) => {
               setUrl(e.target.value);
               if (e.key === 'Enter') {
