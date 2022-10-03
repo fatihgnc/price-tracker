@@ -4,3 +4,4 @@ export const URL_REGEX =
 export const INVALID_URL_TEXT = 'You"ve entered an invalid url.';
 export const URL_INPUT_PLACEHOLDER =
   '(bershka/amazon/hepsiburada/trendyol).com/your-dream-product';
+export const LOCAL_API_URL = 'http://localhost:3001';

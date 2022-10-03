@@ -1,5 +1,7 @@
+import { LOCAL_API_URL } from "./constants";
+
 export const trackPrice = (url) => {
-  fetch('http://localhost:3001', {
+  fetch(LOCAL_API_URL, {
     method: 'POST',
     body: JSON.stringify({ url }),
     headers: {
@@ -8,5 +10,5 @@ export const trackPrice = (url) => {
   })
     .then((res) => res.json())
     .then((data) => console.log(data))
-    .catch((error) => console.error(error));
+    .catch((error) => alert(error.message));
 };
