@@ -6,14 +6,7 @@ module.exports = {
     '#main > article > div.product-detail-view__content > div.product-detail-view__main > div.product-detail-view__side-bar > div.product-detail-info > div.product-detail-info__price > div > span > span > span',
   BERSHKA_PRICE_SELECTOR:
     '#main-content > section > section > section.main-content > div.content-row.main-row > section > div > div.top-group > div.price-elem.price-grid > span',
-  AMAZON_PRICE_SELECTORS: [
-    '#corePrice_mobile_feature_div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > span.a-price.a-text-price.a-size-medium.apexPriceToPay > span.a-offscreen',
-    '#corePriceDisplay_mobile_feature_div > div.a-section.a-spacing-none.aok-align-center > span.a-price.aok-align-center.reinventPricePriceToPayMargin.priceToPay > span.a-offscreen',
-    '#corePriceDisplay_mobile_feature_div > div.a-section.a-spacing-none.aok-align-center > span > span.a-offscreen',
-    '#corePrice_mobile_feature_div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > span.a-price.a-text-price.a-size-medium.apexPriceToPay > span.a-offscreen',
-    '#corePrice_feature_div > div > span > span.a-offscreen',
-    '#corePriceDisplay_mobile_feature_div > div.a-section.a-spacing-none.aok-align-center > span > span:nth-child(2) > span.a-price-whole',
-  ],
+  AMAZON_PRICE_SELECTORS: 'span.a-offscreen',
 
   AMAZON: 'amazon',
   HEPSIBURADA: 'hepsiburada',

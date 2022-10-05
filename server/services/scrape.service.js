@@ -24,24 +24,12 @@ module.exports = {
       },
     };
 
-    const { priceSelector, site, userAgent } = getScrapeParams(url);
+    const { priceSelector, _, userAgent } = getScrapeParams(url);
     if (userAgent) options.headers['User-Agent'] = userAgent;
 
-    let price = 0;
-
     try {
-      if (site === AMAZON) {
-        for await (let selector of AMAZON_PRICE_SELECTORS) {
-          const fetchedPrice = await fetchPrice(options, selector);
-          if (fetchedPrice) {
-            price = fetchedPrice.replace(AMAZON_PRICE_REPLACER_REGEX, ' ');
-            break;
-          }
-        }
-      } else {
-        price = await fetchPrice(options, priceSelector);
-      }
-      return price;
+      const price = await fetchPrice(options, priceSelector);
+      return price.trim().replace(AMAZON_PRICE_REPLACER_REGEX, '');
     } catch (error) {
       throw error;
     }
