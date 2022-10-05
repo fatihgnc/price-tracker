@@ -1,16 +1,15 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const { getScrapeParams } = require('../helpers/request');
-const {
-  AMAZON,
-  AMAZON_PRICE_SELECTORS,
-  AMAZON_PRICE_REPLACER_REGEX,
-} = require('../utils/constants');
+const { AMAZON } = require('../utils/constants');
 
-const fetchPrice = async (opts, selector) => {
+const fetchPrice = async (opts, selector, site) => {
   const res = await axios(opts);
   const $ = cheerio.load(res.data);
-  return $(selector).text();
+  if (site === AMAZON) {
+    return $(selector).html();
+  }
+  return $(selector).text().trim().split(',')[0];
 };
 
 module.exports = {
@@ -24,12 +23,12 @@ module.exports = {
       },
     };
 
-    const { priceSelector, _, userAgent } = getScrapeParams(url);
+    const { priceSelector, site, userAgent } = getScrapeParams(url);
     if (userAgent) options.headers['User-Agent'] = userAgent;
 
     try {
-      const price = await fetchPrice(options, priceSelector);
-      return price.trim().replace(AMAZON_PRICE_REPLACER_REGEX, '');
+      const price = await fetchPrice(options, priceSelector, site);
+      return price;
     } catch (error) {
       throw error;
     }

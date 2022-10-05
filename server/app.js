@@ -11,6 +11,7 @@ app.use(cors());
 
 app.post('/', async (req, res) => {
   try {
+    console.log('here');
     const price = await scrapePrice(req.body.url);
     return res.json({ price });
   } catch (error) {
