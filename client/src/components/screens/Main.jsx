@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { INVALID_URL_TEXT, URL_INPUT_PLACEHOLDER } from '../../utils/constants';
+import { URL_INPUT_PLACEHOLDER } from '../../utils/constants';
 import { trackPrice } from '../../utils/request';
-import { checkUrl } from '../../utils/url';
 
 export default function Main() {
   const [url, setUrl] = useState('');
@@ -16,10 +15,10 @@ export default function Main() {
   // }, [error]);
 
   const processRequest = () => {
-    if (checkUrl(url)) {
+    if (url) {
       trackPrice(url);
       // setError('');
-      setUrl('');
+      // setUrl('');
     }
     // else setError(INVALID_URL_TEXT);
   };
@@ -31,19 +30,22 @@ export default function Main() {
           <input
             type='text'
             placeholder={URL_INPUT_PLACEHOLDER}
+            value={url}
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
             onKeyUp={(e) => {
               setUrl(e.target.value);
               if (e.key === 'Enter') {
                 processRequest();
               }
             }}
-            className='w-full outline-none bg-transparent tracking-wider p-8'
+            className='w-full outline-none bg-transparent tracking-wider py-8 pl-8'
           />
         </div>
         <button
           onClick={processRequest}
-          className='group px-10 uppercase duration-75 flex-shrink-0 bg-black transition-all cursor-pointer '
-          disabled={!checkUrl(url)}
+          className='group px-10 uppercase duration-75 flex-shrink-0 bg-black transition-all cursor-pointer'
         >
           <AiOutlineSend size={25} className='group:hover:text-gray-900' />
         </button>
