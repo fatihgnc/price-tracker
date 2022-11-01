@@ -1,3 +1,8 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
+const environment = process.env.NODE_ENV || 'development';
+
 module.exports = {
   HB_PRICE_SELECTOR: "span[itemprop='price']",
   TY_PRICE_SELECTOR: 'span.prc-dsc',
@@ -19,4 +24,13 @@ module.exports = {
 
   DB_URI: 'mongodb://localhost:27017/price-tracker',
   PORT: process.env.PORT || 3001,
+
+  MONGO_URI:
+    environment === 'development'
+      ? process.env.LOCAL_DB_URI
+      : process.env.PROD_DB_URI,
+  MONGO_OPTIONS: {
+    keepAlive: true,
+    useNewUrlParser: true,
+  },
 };

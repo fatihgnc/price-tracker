@@ -10,7 +10,7 @@ const {
   AMAZON,
   ZARA,
   AMAZON_PRICE_SELECTORS,
-} = require('../utils/constants');
+} = require('../constants');
 
 module.exports = {
   getScrapeParams: (url) => {
@@ -38,5 +38,13 @@ module.exports = {
         site: AMAZON,
       })
     );
+  },
+  fetchPrice: async (opts, selector, site) => {
+    const res = await axios(opts);
+    const $ = cheerio.load(res.data);
+    if (site === AMAZON) {
+      return $(selector).html();
+    }
+    return $(selector).text().trim().split(',')[0];
   },
 };
