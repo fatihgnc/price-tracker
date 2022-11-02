@@ -1,3 +1,6 @@
+const axios = require('axios');
+const cheerio = require('cheerio');
+
 const {
   BERSHKA_PRICE_SELECTOR,
   ZARA_PRICE_SELECTOR,
@@ -9,7 +12,7 @@ const {
   TRENDYOL,
   AMAZON,
   ZARA,
-  AMAZON_PRICE_SELECTORS,
+  AMAZON_PRICE_SELECTOR,
 } = require('../constants');
 
 module.exports = {
@@ -34,7 +37,7 @@ module.exports = {
         site: TRENDYOL,
       }) ||
       (url.includes(AMAZON) && {
-        priceSelector: AMAZON_PRICE_SELECTORS,
+        priceSelector: AMAZON_PRICE_SELECTOR,
         site: AMAZON,
       })
     );

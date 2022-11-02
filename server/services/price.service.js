@@ -1,5 +1,3 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
 const { getScrapeParams, fetchPrice } = require('../utils/helpers/request');
 
 const options = {

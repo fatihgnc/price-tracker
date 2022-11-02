@@ -8,7 +8,7 @@ module.exports = {
   TY_PRICE_SELECTOR: 'span.prc-dsc',
   ZARA_PRICE_SELECTOR: 'span.money-amount__main',
   BERSHKA_PRICE_SELECTOR: 'span.current-price-elem',
-  AMAZON_PRICE_SELECTORS: 'span.a-offscreen',
+  AMAZON_PRICE_SELECTOR: 'span.a-offscreen',
 
   AMAZON: 'amazon',
   HEPSIBURADA: 'hepsiburada',
