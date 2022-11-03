@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import useProxyState from '../../utils/hooks/useProxyState';
+import { Link } from 'react-router-dom';
 import { images } from '../../theme/images';
+import { useRegisterMutation } from '../../store/services/auth.service';
 
 export default function Register() {
   const [loginState, setLoginState] = useProxyState({
@@ -8,6 +11,17 @@ export default function Register() {
     password: '',
     confirmPassword: '',
   });
+
+  const [register, { isSuccess, isLoading, isError, error }] =
+    useRegisterMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      // TODO: Show success message and navigate user to login.
+    } else if (isError) {
+      // TODO: Show error message.
+    }
+  }, [isSuccess, isError]);
 
   const onEmailChange = (e) => {
     setLoginState({ email: e.target.value });
@@ -19,6 +33,10 @@ export default function Register() {
 
   const onConfirmPasswordChange = (e) => {
     setLoginState({ confirmPassword: e.target.value });
+  };
+
+  const onSubmit = () => {
+    register({ ...loginState });
   };
 
   return (
@@ -83,8 +101,10 @@ export default function Register() {
           <button
             type='submit'
             className='text-sm bg-gray-600 uppercase font-regular px-6 py-3'
+            onClick={onSubmit}
           >
-            Submit
+            {/* TODO: Add loading icon when isLoading is true instead of printing 'Processing...' */}
+            {isLoading ? 'Processing...' : 'Submit'}
           </button>
         </div>
         <p className='self-start'>
