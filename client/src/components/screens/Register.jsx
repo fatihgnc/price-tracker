@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import useProxyState from '../../utils/hooks/useProxyState';
 import { images } from '../../theme/images';
+import { useRegisterMutation } from '../../store/services/auth.service';
 
 export default function Register() {
   const [loginState, setLoginState] = useProxyState({
@@ -8,6 +11,21 @@ export default function Register() {
     password: '',
     confirmPassword: '',
   });
+
+  const navigate = useNavigate();
+
+  const [register, { isSuccess, isLoading, isError, error }] =
+    useRegisterMutation();
+
+  useEffect(() => {
+    // TODO: Use custom alert component instead of native alert.
+    if (isSuccess) {
+      alert('Registered successfully.');
+      navigate('/login');
+    } else if (isError) {
+      alert(error.data.error_message);
+    }
+  }, [isSuccess, isError]);
 
   const onEmailChange = (e) => {
     setLoginState({ email: e.target.value });
@@ -21,6 +39,11 @@ export default function Register() {
     setLoginState({ confirmPassword: e.target.value });
   };
 
+  const onSubmit = () => {
+    register({ ...loginState });
+  };
+
+  // TODO: Add validations for form data.
   return (
     <div
       className='w-screen h-screen grid place-items-center'
@@ -83,8 +106,10 @@ export default function Register() {
           <button
             type='submit'
             className='text-sm bg-gray-600 uppercase font-regular px-6 py-3'
+            onClick={onSubmit}
           >
-            Submit
+            {/* TODO: Add loading icon when isLoading is true instead of printing 'Processing...' */}
+            {isLoading ? 'Processing...' : 'Submit'}
           </button>
         </div>
         <p className='self-start'>

@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
+import { MdLogin } from 'react-icons/md';
+
 import { images } from '../../theme/images';
 import { useSelector } from 'react-redux';
-import { MdLogin } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 
-export default function Navbar() {
-  const auth = useSelector((state) => state.auth);
+export default function Navbar({ onLogout }) {
+  const { token } = useSelector((state) => state.auth);
 
   return (
     <nav className='py-5 px-20 flex justify-between items-center gap-x-10 relative'>
@@ -20,7 +21,7 @@ export default function Navbar() {
         </span>
       </div>
       <ul className='flex gap-x-8'>
-        {!auth.token ? (
+        {!token ? (
           <>
             <li className='text-lg font-medium text-white uppercase tracking-wider cursor-pointer'>
               <Link to='/register'>Register</Link>
@@ -33,7 +34,7 @@ export default function Navbar() {
           </>
         ) : (
           <li className='text-lg font-medium text-white uppercase tracking-wider cursor-pointer'>
-            <Link to='/logout'>Log out</Link>
+            <button onClick={onLogout}>Log out</button>
           </li>
         )}
       </ul>

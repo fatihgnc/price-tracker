@@ -1,4 +1,4 @@
-const { default: Router } = require('./components/routes');
+import Router from './routes';
 
 function App() {
   return <Router />;

@@ -1,3 +1,6 @@
+const axios = require('axios');
+const cheerio = require('cheerio');
+
 const {
   BERSHKA_PRICE_SELECTOR,
   ZARA_PRICE_SELECTOR,
@@ -9,8 +12,8 @@ const {
   TRENDYOL,
   AMAZON,
   ZARA,
-  AMAZON_PRICE_SELECTORS,
-} = require('../utils/constants');
+  AMAZON_PRICE_SELECTOR,
+} = require('../constants');
 
 module.exports = {
   getScrapeParams: (url) => {
@@ -34,9 +37,17 @@ module.exports = {
         site: TRENDYOL,
       }) ||
       (url.includes(AMAZON) && {
-        priceSelector: AMAZON_PRICE_SELECTORS,
+        priceSelector: AMAZON_PRICE_SELECTOR,
         site: AMAZON,
       })
     );
+  },
+  fetchPrice: async (opts, selector, site) => {
+    const res = await axios(opts);
+    const $ = cheerio.load(res.data);
+    if (site === AMAZON) {
+      return $(selector).html();
+    }
+    return $(selector).text().trim().split(',')[0];
   },
 };
