@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import useProxyState from '../../utils/hooks/useProxyState';
-import { Link } from 'react-router-dom';
 import { images } from '../../theme/images';
 import { useRegisterMutation } from '../../store/services/auth.service';
 
@@ -12,14 +12,18 @@ export default function Register() {
     confirmPassword: '',
   });
 
+  const navigate = useNavigate();
+
   const [register, { isSuccess, isLoading, isError, error }] =
     useRegisterMutation();
 
   useEffect(() => {
+    // TODO: Use custom alert component instead of native alert.
     if (isSuccess) {
-      // TODO: Show success message and navigate user to login.
+      alert('Registered successfully.');
+      navigate('/login');
     } else if (isError) {
-      // TODO: Show error message.
+      alert(error.data.error_message);
     }
   }, [isSuccess, isError]);
 
@@ -39,6 +43,7 @@ export default function Register() {
     register({ ...loginState });
   };
 
+  // TODO: Add validations for form data.
   return (
     <div
       className='w-screen h-screen grid place-items-center'

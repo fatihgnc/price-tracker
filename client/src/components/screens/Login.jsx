@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import useProxyState from '../../utils/hooks/useProxyState';
-import { Link } from 'react-router-dom';
 import { images } from '../../theme/images';
+import { authActions } from '../../store/slices/auth.slice';
 import { useLoginMutation } from '../../store/services/auth.service';
 
 export default function Login() {
@@ -11,15 +13,19 @@ export default function Login() {
     password: '',
   });
 
-  const [login, { isSuccess, isError, isLoading, error, data }] =
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [login, { isSuccess, isError, isLoading, data, error }] =
     useLoginMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      // TODO: Dispatch user token to store and navigate to home page.
-      console.log(data);
+      navigate('/');
+      dispatch(authActions.login(data.data.user));
     } else if (isError) {
-      // TODO: Show error message.
+      // TODO: Use custom alert component instead of native alert.
+      alert(error.data.error_message);
     }
   }, [isSuccess, isError]);
 
@@ -35,6 +41,7 @@ export default function Login() {
     login(loginState);
   };
 
+  // TODO: Add validations for form data.
   return (
     <div
       className='w-screen h-screen grid place-items-center'

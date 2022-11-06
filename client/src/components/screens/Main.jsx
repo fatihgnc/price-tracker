@@ -1,26 +1,16 @@
 import { useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
+
 import { URL_INPUT_PLACEHOLDER } from '../../utils/constants';
 import { trackPrice } from '../../utils/request';
 
 export default function Main() {
   const [url, setUrl] = useState('');
-  // const [error, setError] = useState('');
-
-  // useEffect(() => {
-  //   if (error) {
-  //     alert(error);
-  //     setError('');
-  //   }
-  // }, [error]);
 
   const processRequest = () => {
     if (url) {
       trackPrice(url);
-      // setError('');
-      // setUrl('');
     }
-    // else setError(INVALID_URL_TEXT);
   };
 
   return (
