@@ -4,11 +4,15 @@ dotenv.config();
 const environment = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  HB_PRICE_SELECTOR: "span[itemprop='price']",
+  HB_PRICE_SELECTOR: '#originalPrice',
   TY_PRICE_SELECTOR: 'span.prc-dsc',
   ZARA_PRICE_SELECTOR: 'span.money-amount__main',
   BERSHKA_PRICE_SELECTOR: 'span.current-price-elem',
   AMAZON_PRICE_SELECTOR: 'span.a-offscreen',
+
+  AMAZON_STOCK_SELECTOR: '#outOfStock',
+
+  AMAZON_PRODUCT_TITLE_SELECTOR: '#productTitle',
 
   AMAZON: 'amazon',
   HEPSIBURADA: 'hepsiburada',

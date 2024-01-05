@@ -4,8 +4,7 @@ const cors = require('cors');
 const { PORT } = require('../utils/constants');
 
 module.exports = async (appContext) => {
-  const { usersCollection, authService, productService, productsCollection } =
-    appContext;
+  const { usersCollection, authService, priceService } = appContext;
   const app = express();
 
   // Middlewares
@@ -13,7 +12,10 @@ module.exports = async (appContext) => {
   app.use(cors());
 
   // Controller middlewares
-  app.use('/api/price', require('../controllers/price.controller')(appContext));
+  app.use(
+    '/api/price',
+    require('../controllers/price.controller')({ priceService })
+  );
   app.use(
     '/api/auth',
     require('../controllers/auth.controller')({

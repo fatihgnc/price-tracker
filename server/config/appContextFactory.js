@@ -16,7 +16,7 @@ module.exports = async () => {
     const productsCollection = mongo.collection('prices');
 
     // Create services
-    const productService = require('../services/price.service')({
+    const priceService = require('../services/price.service')({
       productsCollection,
     });
     const authService = require('../services/auth.service')({
@@ -24,7 +24,7 @@ module.exports = async () => {
     });
 
     // Export all assets
-    return { productService, authService, usersCollection, productsCollection };
+    return { priceService, authService, usersCollection, productsCollection };
   } catch (error) {
     console.log('Error while processing appContext: ', error);
   }

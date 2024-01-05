@@ -2,52 +2,61 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const {
-  BERSHKA_PRICE_SELECTOR,
-  ZARA_PRICE_SELECTOR,
-  HB_PRICE_SELECTOR,
-  TY_PRICE_SELECTOR,
-  USER_AGENT,
-  BERSHKA,
-  HEPSIBURADA,
-  TRENDYOL,
   AMAZON,
-  ZARA,
   AMAZON_PRICE_SELECTOR,
+  AMAZON_STOCK_SELECTOR,
+  AMAZON_PRODUCT_TITLE_SELECTOR,
 } = require('../constants');
 
 module.exports = {
   getScrapeParams: (url) => {
-    return (
-      (url.includes(BERSHKA) && {
-        userAgent: USER_AGENT,
-        priceSelector: BERSHKA_PRICE_SELECTOR,
-        site: BERSHKA,
-      }) ||
-      (url.includes(ZARA) && {
-        userAgent: USER_AGENT,
-        priceSelector: ZARA_PRICE_SELECTOR,
-        site: ZARA,
-      }) ||
-      (url.includes(HEPSIBURADA) && {
-        priceSelector: HB_PRICE_SELECTOR,
-        site: HEPSIBURADA,
-      }) ||
-      (url.includes(TRENDYOL) && {
-        priceSelector: TY_PRICE_SELECTOR,
-        site: TRENDYOL,
-      }) ||
-      (url.includes(AMAZON) && {
-        priceSelector: AMAZON_PRICE_SELECTOR,
-        site: AMAZON,
-      })
-    );
+    return {
+      priceSelector: AMAZON_PRICE_SELECTOR,
+      site: AMAZON,
+    };
+    // switch (true) {
+    //   case url.includes(BERSHKA):
+    //     return {
+    //       userAgent: USER_AGENT,
+    //       priceSelector: BERSHKA_PRICE_SELECTOR,
+    //       site: BERSHKA,
+    //     };
+    //   case url.includes(ZARA):
+    //     return {
+    //       userAgent: USER_AGENT,
+    //       priceSelector: ZARA_PRICE_SELECTOR,
+    //       site: ZARA,
+    //     };
+    //   case url.includes(HEPSIBURADA):
+    //     return {
+    //       userAgent: USER_AGENT,
+    //       priceSelector: HB_PRICE_SELECTOR,
+    //       site: HEPSIBURADA,
+    //     };
+    //   case url.includes(TRENDYOL):
+    //     return {
+    //       priceSelector: TY_PRICE_SELECTOR,
+    //       site: TRENDYOL,
+    //     };
+    //   case url.includes(AMAZON):
+    //   default:
+    //     return {};
+    // }
   },
-  fetchPrice: async (opts, selector, site) => {
+  fetchProductData: async (opts, selector, site) => {
+    if (site !== AMAZON)
+      throw new Error('Websites other than Amazon is not supported yet.');
+
     const res = await axios(opts);
     const $ = cheerio.load(res.data);
-    if (site === AMAZON) {
-      return $(selector).html();
-    }
-    return $(selector).text().trim().split(',')[0];
+    const isProductOutOfStock = !!$(AMAZON_STOCK_SELECTOR).html();
+    if (isProductOutOfStock) throw new Error('Product is out of stock.');
+
+    const price = $(selector).html();
+    const title = $(AMAZON_PRODUCT_TITLE_SELECTOR).text().trim();
+    if (!price || !title)
+      throw new Error('Price and/or title data could not be found!');
+
+    return { price, title };
   },
 };

@@ -1,5 +1,4 @@
 const expressFactory = require('./config/expressFactory');
-
 const appContextFactory = require('./config/appContextFactory')();
 
 appContextFactory

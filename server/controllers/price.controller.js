@@ -10,10 +10,10 @@ module.exports = ({ priceService }) => {
         .json({ error: true, message: 'An url must be provided.' });
     }
     try {
-      const price = await priceService.scrapePrice(url);
-      return res.json({ price });
+      const product = await priceService.scrapeProduct(url);
+      return res.json({ ...product });
     } catch (error) {
-      res.json({ error: error.message });
+      res.status(400).json({ error: error.message || 'Something went wrong!' });
     }
   });
 

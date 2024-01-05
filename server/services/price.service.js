@@ -1,4 +1,7 @@
-const { getScrapeParams, fetchPrice } = require('../utils/helpers/request');
+const {
+  getScrapeParams,
+  fetchProductData,
+} = require('../utils/helpers/request');
 
 const options = {
   headers: {
@@ -9,18 +12,11 @@ const options = {
 
 module.exports = () => {
   return {
-    async scrapePrice(url) {
-      options['url'] = url;
-
+    async scrapeProduct(url) {
+      options.url = url;
       const { priceSelector, site, userAgent } = getScrapeParams(url);
       if (userAgent) options.headers['User-Agent'] = userAgent;
-
-      try {
-        const price = await fetchPrice(options, priceSelector, site);
-        return price;
-      } catch (error) {
-        throw error;
-      }
+      return await fetchProductData(options, priceSelector, site);
     },
   };
 };
